@@ -1,4 +1,4 @@
-# Workshop on "Applications for *a*rtificial *i*ntelligence (AI) in *r*isk *a*ssessment" (AIRA)
+# Workshop on "Applications for **a**rtificial **i**ntelligence (AI) in **r**isk **a**ssessment" (AIRA)
 
 ## This repo contains the materials for the training course "Applications for artificial intelligence (AI) in risk assessment", held on Friday 25 November 2022 in Sitges - Barcelona in Spain.
 
