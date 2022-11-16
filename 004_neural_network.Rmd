@@ -1,0 +1,262 @@
+# Neural Network with Tensorflow
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Packages
+```{r}
+library(tensorflow)
+library(tidyverse)
+library(keras)
+```
+
+## Data
+```{r}
+substances <- read_csv(
+  here::here(
+    "data-raw",
+    "Module2_6_Substances.csv")) |>
+  janitor::clean_names()
+
+acute_data <- read_csv(
+    here::here(
+      "data-raw",
+      "Module2_6_AcuteToxData.csv")) |>
+  janitor::clean_names()
+
+```
+
+## Preprocessing the data
+Here we combine the data to contain the fingerprints, the `dtxsid` ids and the `nontoxic` and the `ld40_lm` column
+
+```{r}
+acute_data_select <- acute_data |>
+  dplyr::select(
+    dtxsid,
+    nontoxic,
+    ld50_lm
+  )
+
+substances_select <- substances |>
+  dplyr::select(
+    dtxsid,
+    qsar_ready_smiles
+  ) 
+
+data_nn <- full_join(acute_data_select, substances_select)
+```
+
+We reproduce part of the previous section to convert the qsar ready smiles to fingerprints
+
+```{r}
+library(rcdk)
+library(rcdklibs)
+all_smiles <- substances_select$qsar_ready_smiles
+all_mols <-parse.smiles(all_smiles)
+all_mols[[1]]
+```
+
+### Computing chemical fingerprints
+
+We can run the same function over the entire 'all_mols' dataset, leveraging the `map()` function from the `{purrr}` R package of the `{tidyverse}`:
+```{r}
+all.fp <- 
+  map(all_mols, 
+      get.fingerprint, 
+      type='standard')
+
+## Convert the pf list to a df
+fp_tbl <- fingerprint::fp.to.matrix(all.fp) |> as_tibble()
+
+## adding the predicted class (nontoxic as column)
+
+fp_tbl <- fp_tbl |>
+  mutate(class = acute_data_select$nontoxic) |>
+  relocate(class)
+
+```
+
+## Split data into training and test set
+
+```{r}
+library(rsample)
+set.seed(123)
+data_split <- initial_split(fp_tbl, prop = 3/4)
+## trainig data
+training_data <- training(data_split) |> 
+  select(-class) |> 
+  as.matrix() |>
+  array_reshape(c(5216, 1*1024))
+
+training_labels <- training(data_split) |> select(class) |> 
+  as.matrix() |>
+  as.integer() |>
+  array_reshape(c(5216))
+
+
+## test data
+test_data <- testing(data_split) |> select(-class) |> 
+  as.matrix() |>
+  array_reshape(c(1739, 1*1024))
+test_labels <- testing(data_split) |> select(class) |> 
+  as.matrix() |>
+  as.integer() |>
+  array_reshape(c(1739))
+  
+
+
+training_data[1,c(1:80)]
+training_labels[1:10]
+
+```
+Neural Network
+```{r}
+
+
+model <- keras_model_sequential(input_shape = c(1*1024)) |>
+  layer_dense(128, activation = "relu") %>%
+  layer_dropout(rate = 0.5) |>
+  layer_dense(units = 128, activation = "relu") |>
+#  layer_dropout(0.2) %>%
+  layer_dense(units = 16, activation = "relu") |>
+#  layer_dropout(0.2) %>%
+  layer_dense(units = 16, activation = "relu") |>
+#  layer_dropout(0.2) %>%
+  layer_dense(units = 1, activation = "sigmoid")
+
+model %>% compile(
+  optimizer = "rmsprop",
+  loss = "binary_crossentropy",
+  metrics = "accuracy"
+)
+
+model %>% fit(training_data, training_labels, epochs = 50)
+
+model %>% evaluate(test_data,  test_labels, verbose = 2)
+
+pred <- model %>% predict(test_data, batch_size = 10)
+
+y_pred = round(pred)
+# Confusion matrix
+confusion_matrix = table(y_pred, test_labels)
+
+confusion_matrix
+```
+
+## Prediction a continious outcome (regression)
+We need to scale the data to the mean and sd
+```{r}
+library(rsample)
+set.seed(123)
+data_split <- initial_split(fp_tbl, prop = 3/4)
+## trainig data
+training_data <- training(data_split) |> 
+  select(-class) |> 
+  as.matrix() |>
+  array_reshape(c(5216, 1*1024))
+
+test_data <- testing(data_split) |> select(-class) |> 
+  as.matrix() |>
+  array_reshape(c(1739, 1*1024))
+
+
+## normalize and scale
+mean <- apply(training_data, 2, mean)
+sd <- apply(training_data, 2, sd)
+training_data <- scale(training_data, center = mean, scale = sd)
+test_data <- scale(test_data, center = mean, scale = sd)
+
+training_labels <- training(data_split) |> select(class) |> 
+  as.matrix() |>
+  as.integer() |>
+  array_reshape(c(5216))
+
+
+test_labels <- testing(data_split) |> select(class) |> 
+  as.matrix() |>
+  as.integer() |>
+  array_reshape(c(1739))
+  
+
+
+training_data[1,c(1:80)]
+training_labels[1:10]
+
+```
+Neural Network
+```{r}
+
+
+model <- keras_model_sequential(input_shape = c(1*1024)) |>
+  layer_dense(128, activation = "relu") %>%
+  layer_dropout(rate = 0.5) |>
+  layer_dense(units = 128, activation = "relu") |>
+#  layer_dropout(0.2) %>%
+  layer_dense(units = 16, activation = "relu") |>
+#  layer_dropout(0.2) %>%
+  layer_dense(units = 16, activation = "relu") |>
+#  layer_dropout(0.2) %>%
+  layer_dense(units = 1)
+
+model %>% compile(
+  optimizer = "rmsprop",
+  loss = "mse",
+  metrics = c("mae")
+)
+
+model %>% fit(training_data, training_labels, epochs = 50)
+
+model %>% evaluate(test_data,  test_labels, verbose = 2)
+
+all_scores <- c(all_scores, results$mae)
+
+y_pred = round(pred)
+# Confusion matrix
+confusion_matrix = table(y_pred, test_labels)
+
+confusion_matrix
+```
+
+
+
+## Maybe we can do better when we use different embeddings
+
+
+```{r}
+
+
+
+
+
+c(c(x_train, y_train), c(x_test, y_test)) %<-% keras::dataset_mnist()
+
+
+
+x_train <- x_train / 255
+x_test <-  x_test / 255
+
+model <- keras_model_sequential(input_shape = c(28, 28)) %>%
+  layer_flatten() %>%
+  layer_dense(128, activation = "relu") %>%
+  layer_dropout(0.2) %>%
+  layer_dense(10)
+
+predictions <- predict(model, x_train[1:2, , ])
+predictions
+
+tf$nn$softmax(predictions)
+loss_fn <- loss_sparse_categorical_crossentropy(from_logits = TRUE)
+loss_fn(y_train[1:2], predictions)
+
+model %>% compile(
+  optimizer = "",
+  loss = loss_fn,
+  metrics = "accuracy"
+)
+model %>% fit(x_train, y_train, epochs = 5)
+
+model %>% evaluate(x_test,  y_test, verbose = 2)
+
+```
+
