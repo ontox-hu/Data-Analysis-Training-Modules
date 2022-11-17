@@ -54,7 +54,7 @@ Helman G, Shah I, Patlewicz G. Transitioning the Generalised Read-Across approac
 
 - With associated data available at: https://github.com/USEPA/CompTox-GenRA-acutetox-comptoxicol/tree/master/input
 
-This exercise will specifically predict LD50 values for the chemical, 1-chloro-4-nitrobenzene (DTXSID5020281). This chemical is an organic compound with the formula ClC6H4NO2, and is a common intermediate in the production of a number of industrial compounds, including common antioxidants found in rubber.
+This exercise will specifically predict LD50 values for the chemical, 1-chloro-4-nitrobenzene (**DTXSID**). This chemical is an organic compound with the formula ClC6H4NO2, and is a common intermediate in the production of a number of industrial compounds, including common antioxidants found in rubber.
 
 #### Training Module's **Environmental Health Questions**
 This training module was specifically developed to answer the following environmental health questions:
@@ -242,7 +242,10 @@ TODO: write out this experiment, using https://rsample.tidymodels.org/reference/
 
 </details>
 
-Our target substance for this exercise is going to be DTXSID5020281, which is 1-chloro-4-nitrobenzene. This chemical is an organic compound with the formula ClC~6~H~4~NO~2~, and is a common intermediate in the production of a number of industrially useful compounds, including common antioxidants found in rubber. Here is an image of the chemical structure (https://comptox.epa.gov/dashboard/dsstoxdb/results?search=DTXSID5020281):
+Our target substance for this exercise is going to be DTXSID0022808, which is chlorpromazine. This chemical is an organic compound with the formula C17H19ClN2S, and is a common intermediate in the production of a number of industrially useful compounds, including common antioxidants found in rubber. Here is an image of the chemical structure. 
+
+[epa-dashboard](https://comptox.epa.gov/dashboard/dsstoxdb/results?search=DTXSID0022808)
+[estiv](https://pubchem.ncbi.nlm.nih.gov/compound/Chlorpromazine)
 
 We can view the molecule structure in R with rcdk or ChemmineR on Bioconductor. There are some issues with these packages in my setup, so I will demo an online tool.
 
@@ -250,7 +253,7 @@ We can view the molecule structure in R with rcdk or ChemmineR on Bioconductor. 
 
 Which has the following specs:
 
-`sudo apt install neofetch`
+`neofetch`
 
             .-/+oossssoo+/-. 
         `:+ssssssssssssssssss+:` 
@@ -288,22 +291,23 @@ CPU(s):    30 Single core AMD EPYC (with IBPB)s (-SMP-) cache: 15360 KB
 TODO: FIX BUG `"Error in view.molecule.2d(mol) : java.lang.NoSuchMethodError: <init>"`
 This is the code to visualize the molecule using `{rcdk}`
 ```{r, eval=FALSE}
+target_id <- "DTXSID0022808"
 library(rcdk)
-DTXSID5020281 <- substances |>
+target_compound <- substances |>
   dplyr::filter(
-    dtxsid == "DTXSID5020281"
+    dtxsid == target_id
   ) |> pluck("smiles")
 
-mol <- parse.smiles(DTXSID5020281)[[1]]
-view.molecule.2d(mol)
+mol <- parse.smiles(target_compound)[[1]]
+#view.molecule.2d(mol)
+mol
 ```
-
 
 ```{r, echo=FALSE, fig.align='center'} 
 knitr::include_graphics(
   here::here(
     "images",
-    "1-chloro-4-nitrobenzene.svg"
+    "chlorpromazine.png"
   )
 )
 ```
@@ -312,14 +316,16 @@ This is the code to visualize the molecule using `{ChemmineR}`. This Bioconducto
 and https://packages.debian.org/unstable/libopenbabel-dev
 
 ```{r, eval=FALSE}
-library(ChemmineR)
-library(ChemmineOB)
+## currently not working on the env I am working in 
 
-sdf <- smiles2sdf(DTXSID5020281)
-view(sdf) 
+library(ChemmineR)
+#library(ChemmineOB)
+
+#sdf <- smiles2sdf(target_compound)
+#view(sdf) 
 
 ## molecule viz
-plot(sdf) # Plots structures to R graphics device 
+#plot(sdf) # Plots structures to R graphics device 
 ```
 
 We can also visualize the compound using the link to the EPA Dashboard above, or via this [VHP4Safety Platform tool](https://cdkdepict.cloud.vhp4safety.nl/depict.html).
@@ -327,7 +333,7 @@ We can also visualize the compound using the link to the EPA Dashboard above, or
 <div class="question">
 ##### Exercise `r les` {-}
 
-Copy - paste the SMILES for 1-chloro-4-nitrobenzene into CDK DEDPICT and download the structure image.
+Copy - paste the SMILES for `chlorpromazine` into CDK DEDPICT and download the structure image.
 
 </div>
 
@@ -337,7 +343,7 @@ Copy - paste the SMILES for 1-chloro-4-nitrobenzene into CDK DEDPICT and downloa
 knitr::include_graphics(
   here::here(
     "images",
-    "1-chloro-4-nitrobenzene.svg"
+    "chlorpromazine.png"
   )
 )
 ```
@@ -348,10 +354,10 @@ knitr::include_graphics(
 Filtering the dataframes for only data on this target substance:
 ```{r}
 target_substance <- substances |> 
-  dplyr::filter(dtxsid == 'DTXSID5020281')
+  dplyr::filter(dtxsid == target_id)
 
 target_tox <- acute_data |>
-  dplyr::filter(dtxsid == 'DTXSID5020281')
+  dplyr::filter(dtxsid == target_id)
 ```
 
 <br>
@@ -373,7 +379,6 @@ all_mols <-parse.smiles(all_smiles)
 all_mols[[1]]
 ```
 
-
 ### Computing chemical fingerprints
 
 With these mol data, we can now compute the fingerprints for our target substance, as well as all the substances in the dataset. We can compute fingerprints leveraging the 'get.fingerprint' function. Let's first run it on the target chemical:
@@ -382,16 +387,12 @@ target.fp <- get.fingerprint(target_mol[[1]], type = 'standard')
 target.fp # View fingerprint
 ```
 
-
 We can run the same function over the entire 'all_mols' dataset, leveraging the `map()` function from the `{purrr}` R package of the `{tidyverse}`:
 ```{r}
 all.fp <- 
   map(all_mols, 
       get.fingerprint, 
       type='standard')
-
-
-
 ```
 
 ## Calculating Chemical Similarities
@@ -404,10 +405,9 @@ Steps to generate this similarity matrix are detailed here:
 ```{r}
 all.fp.sim <- fingerprint::fp.sim.matrix(all.fp, method = 'tanimoto')
 all.fp.sim <- as.data.frame(all.fp.sim) # Convert the outputted matrix to a dataframe
-colnames(all.fp.sim) = substances$DTXSID # Placing chemical identifiers back as column headers
-row.names(all.fp.sim) = substances$DTXSID # Placing chemical identifiers back as row names
+colnames(all.fp.sim) = substances$dtxsid # Placing chemical identifiers back as column headers
+row.names(all.fp.sim) = substances$dtxsid # Placing chemical identifiers back as row names
 ```
-
 
 Since we are querying a large number of chemicals, it is difficult to view the entire resulting similarity matrix. Let's, instead view portions of these results:
 ```{r}
