@@ -15,7 +15,7 @@ The course material, that were used for the Workshop can be found in [this bookd
  3. Chapter 3: Example of a Read-Across approach, using classical and ChemBERT - Transformer structural embeddings
  4. Chapter 4: A machine learning example for compound classification
 
-This repository is a `{bookdown}` project and can be rendered locally. To render the complete website following the steps below
+This repository is a `{bookdown}` project and can be rendered locally. To render the complete website follow the steps below
 
  1. Clone the repository to your local system, either from the GUI in RStudio or running `git clone https://github.com/ontox-hu/aira` in the Terminal.
 
