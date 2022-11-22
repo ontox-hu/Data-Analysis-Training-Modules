@@ -1,6 +1,6 @@
-book_filename: "INTRO_INTO_R"
+book_filename: "AI_ASPIS_WORKSHOP"
 language:
   ui:
-    chapter_name: "Lesson "
+    chapter_name: "Part "
 delete_merged_file: true
 new_session: yes

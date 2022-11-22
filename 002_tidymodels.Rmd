@@ -1,8 +1,8 @@
-# Lesson 5 - Machine Learning with R
+# Part 2 -- Machine Learning with R
 
 ```{r include=FALSE}
 load("course_urls.RData")
-les <- 5
+les <- 2
 ```
 
 ```{r echo=FALSE, message=FALSE, out.width = "50%", fig.align = "center"}
@@ -140,8 +140,6 @@ tf <- tempfile()
 td <- tempdir()
 file.path <- here::here(
   "data",
-  "lesson5",
-  "qsar",
   "qsar_oral_toxicity.zip"
 )
 
@@ -933,7 +931,7 @@ tame_importance_fit %>%
   rpart.plot(roundint = FALSE)
 ```
 
-# Case study; QSAR data
+## Case study; QSAR data
 To look at a more realistic case example, that is not so clear cut as the previous (educational) exercise. Let's look at a dataset containing data suitable for Quantitative Structure Activity Relationships (QSAR).
 We downloaded the data in a code chunk above as "qsar_oral_toxicity.csv". The data should be available in a temporary directory on your machine. To see the contents of this directory type
 ```{r}
@@ -1431,7 +1429,7 @@ qsar_train |>
   tally()
 ```
 
-XGBoost
+## XGBoost
 
 See: https://parsnip.tidymodels.org/reference/details_boost_tree_xgboost.html
 
@@ -1619,86 +1617,86 @@ caret::confusionMatrix(
 
 ## Bigger grid
 https://cran.r-project.org/web/packages/doFuture/vignettes/doFuture.html
-```{r}
-# ## we can optimize the big grid tuning using a different engine
- xgb_l_tune <- boost_tree(
-   trees = tune(),
-   mtry = tune(),
-   tree_depth = tune()) %>% 
-   set_engine("xgboost") |>
-   set_mode("classification")
+```{r, eval=FALSE}
+# # ## we can optimize the big grid tuning using a different engine
+#  xgb_l_tune <- boost_tree(
+#    trees = tune(),
+#    mtry = tune(),
+#    tree_depth = tune()) %>% 
+#    set_engine("xgboost") |>
+#    set_mode("classification")
+# # 
+# # tree_grid <- grid_regular(
+# #   trees(),
+# #   tree_depth(),
+# #   finalize(mtry(), select(data_qsar , -class)),
+# #   levels = 10)
+# # 
+# # 
+# # set.seed(234)
+# # cell_folds <- vfold_cv(qsar_train, v = 10)
+# # 
 # 
-# tree_grid <- grid_regular(
-#   trees(),
-#   tree_depth(),
-#   finalize(mtry(), select(data_qsar , -class)),
-#   levels = 10)
+# # 
+# # set.seed(345)
 # 
+# ## read results from disk
+# xgb_l_res <- readr::read_rds("xgb_l_res.rds")
 # 
-# set.seed(234)
-# cell_folds <- vfold_cv(qsar_train, v = 10)
+#  xgb_wf_l_tune <- workflow() %>%
+#    add_model(xgb_l_tune) %>%
+#    add_formula(class ~ .)
 # 
-
+# #xgb_l_res <- 
+# #  xgb_wf_l_tune %>% 
+# #  tune_grid(
+# #    resamples = cell_folds,
+# #    grid = tree_grid, control = control_grid(verbose = TRUE))
+#     
+# #xgb_l_res
+# #readr::write_rds(xgb_l_res, "xgb_l_res.rds")
 # 
-# set.seed(345)
-
-## read results from disk
-xgb_l_res <- readr::read_rds("xgb_l_res.rds")
-
- xgb_wf_l_tune <- workflow() %>%
-   add_model(xgb_l_tune) %>%
-   add_formula(class ~ .)
-
-#xgb_l_res <- 
-#  xgb_wf_l_tune %>% 
-#  tune_grid(
-#    resamples = cell_folds,
-#    grid = tree_grid, control = control_grid(verbose = TRUE))
-    
-#xgb_l_res
-#readr::write_rds(xgb_l_res, "xgb_l_res.rds")
-
-hyper_p <- xgb_l_res |>
-  collect_metrics()
-
-xgb_l_res %>%
-  collect_metrics() %>%
-  mutate(tree_depth = factor(tree_depth)) %>%
-  ggplot(aes(trees, mean, color = tree_depth)) +
-#  geom_line(size = 1.5, alpha = 0.6) +
-  geom_point(size = 2) +
-  facet_wrap(~ .metric, scales = "free", nrow = 2) +
-  scale_x_log10(labels = scales::label_number()) +
-  scale_color_viridis_d(option = "plasma", begin = .9, end = 0) +
-  facet_wrap(~mtry)
-
-xgb_l_res %>%
-  show_best("accuracy")
-
-best_boost <- xgb_l_res %>%
-  select_best("accuracy")
-
-final_wf <- 
-  xgb_wf %>% 
-  finalize_workflow(best_boost)
-final_wf
-
-final_fit <- 
-  final_wf %>%
-  last_fit(qsar_split) 
-
-final_fit$.metrics
-
-xgb_fit %>% extract_fit_parsnip()
-#predict(final_fit, qsar_test)
-
-final_fit$.predictions
-
-final_fit$.predictions[[1]] %>% 
-  accuracy(truth= as.factor(class), .pred_class) 
-
-caret::confusionMatrix(
-  final_fit$.predictions[[1]]$.pred_class, final_fit$.predictions[[1]]$class )
+# hyper_p <- xgb_l_res |>
+#   collect_metrics()
+# 
+# xgb_l_res %>%
+#   collect_metrics() %>%
+#   mutate(tree_depth = factor(tree_depth)) %>%
+#   ggplot(aes(trees, mean, color = tree_depth)) +
+# #  geom_line(size = 1.5, alpha = 0.6) +
+#   geom_point(size = 2) +
+#   facet_wrap(~ .metric, scales = "free", nrow = 2) +
+#   scale_x_log10(labels = scales::label_number()) +
+#   scale_color_viridis_d(option = "plasma", begin = .9, end = 0) +
+#   facet_wrap(~mtry)
+# 
+# xgb_l_res %>%
+#   show_best("accuracy")
+# 
+# best_boost <- xgb_l_res %>%
+#   select_best("accuracy")
+# 
+# final_wf <- 
+#   xgb_wf %>% 
+#   finalize_workflow(best_boost)
+# final_wf
+# 
+# final_fit <- 
+#   final_wf %>%
+#   last_fit(qsar_split) 
+# 
+# final_fit$.metrics
+# 
+# xgb_fit %>% extract_fit_parsnip()
+# #predict(final_fit, qsar_test)
+# 
+# final_fit$.predictions
+# 
+# final_fit$.predictions[[1]] %>% 
+#   accuracy(truth= as.factor(class), .pred_class) 
+# 
+# caret::confusionMatrix(
+#   final_fit$.predictions[[1]]$.pred_class, final_fit$.predictions[[1]]$class )
 
 ```
 

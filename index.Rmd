@@ -1,5 +1,5 @@
 ---
-title: "Intro into R, Reproducible research and machine learning"
+title: "Workshop on 'Applications for artificial intelligence (AI) in risk assessment' (AiRA)"
 author: ""
 site: bookdown::bookdown_site
 output: 
@@ -17,23 +17,23 @@ output:
             toc:
                 collapse: section
                 scroll_highlight: yes
-                before: <li class="toc-logo"><a href="./"></a> <h4 class=".paddingtitel ">Intro Into R </h2></li>
+                before: <li class="toc-logo"><a href="./"></a> <h4 class=".paddingtitel ">AI in Risk Assessment (AiRA) </h2></li>
+header-includes:
+  - \usepackage{fontawesome5}
 ---
+
+Download the source code [`r icons::fontawesome("github")`](https://github.com/ontox-hu/aspis-workshop-ai-tox)
+
 
 ```{r include = FALSE}
 # Define the web addresses for the course
 # run as needed, not included automatically because of stuff (aka git complains)
-serverurl <- "https://daur.rstudio.hu.nl/"
-githuburl <- "https://github.com/ontox-hu/course_R_AI"
-readerurl <- "..."
-ev1vurl <- "https://lesmaterialen.rstudio.hu.nl/statistiek-en-excel-reader/"
+githuburl <- "https://github.com/ontox-hu/aspis-workshop-ai-tox"
+readerurl <- "https://rstudio-connect.hu.nl/aira/"
 email <- "marc.teunis@hu.nl"
-deadline1 <- "vrijdag 11 maart 22.00 uur"
-deadline2 <- "vrijdag 18 maart 22.00 uur"
-deadline3 <- "vrijdag 25 maart 22.00 uur"
 
 save(
-    list = c("serverurl", "githuburl", "readerurl"), 
+    list = c("githuburl", "readerurl", "email"), 
     file = "course_urls.RData")
 ```
 
@@ -72,31 +72,6 @@ Please note: this is a crash course. We scheduled this course to allow you to th
 
 We wish you good luck and we hope you will have a lot of fun with R!
 
-## Course outline
-
-This page explains how the course is constructed and what will be expected from you.
-
-**Schedule 2022:**
-
-
-Lesson  :
-
- 
- 
-
-Day 4:
-
- - Functional programming
- - Writing functions
- 
-
-Day 5:
-
- - Machine Learning with {tidymodels}
- - Deep Learning with tensorflow for R
-
-
-
 ### Course material
 
 The course material consists of the following:
@@ -106,34 +81,30 @@ The course material consists of the following:
 
 To navigate through the different materials, you can use the menu on the left. The course is based on the online book [R for Data Science](https://r4ds.had.co.nz/index.html).
 
-### Lessons
-
-Each lesson will consist of:
-
-- a short introduction to the subject by the instructor;
-- selfstudy of the instruction pages; 
-- and making the exercises.
-
-Each lesson, one or two instructors will be present to assist with the exercises and provide feedback. 
 
 ### Exercises
 
 The exercises consist of writing R code to solve data analysis problems. Answers are available for each exercise. Most likely you will not finish all exercises during the lesson, which means that you will have to finish them in your own time. It is important to make all exercises: the only way to learn R is to practice, practice and practice by making the exercises. Some R functions and principles are only explained via the exercises.
 
 
-### Rstudio server
+### R and RStudio
 
-During the course, we will use an **RStudio server**, which you can reach via [this link](`r serverurl`) using a browser. You can log in to this RStudio server with your HU email address and with your HU password. Within the Rstudio environment you'll have to make an R Project (see instructions in lesson 1). Data files will be provided by the instructors and are present in the Rstudio server folder mabdaur/data. 
+During the course, we will use R in the Integrated Development Environment  **RStudio**, which you can download and install for your system using the links below:
 
-In case of any problems with the RStudio server, please contact `r email`.
+Download R [here](https://cran.r-project.org/)
+Download RStudio [here](https://posit.co/download/rstudio-desktop/)
 
+## Resources and Bookdown
+This website has been created using the `{bookdown}` R package
+
+```{r}
+citation(package = "bookdown")
+```
+I you want to learn more on bookdown, see [this link](https://bookdown.org/)
 
 ## Learning objectives
 
 After this course, you will be able to 
 
-- use R to perform your analyses repoducible
-- backup your work using version control in github
-- implement literate programming in data analysis and visualization.
-- communicate the results of data analysis and how you reached them using Rmarkdown
-- explain the basics of machine learning in toxicology.
+- use R to perform a structure-based Read across
+- explain the basics of machine learning and Deep learning in toxicology.
