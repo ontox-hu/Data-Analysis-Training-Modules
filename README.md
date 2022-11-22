@@ -14,18 +14,3 @@ The course material, that were used for the Workshop can be found in [this bookd
  2. Chapter 2: An introduction to the tidymodels framwork for R
  3. Chapter 3: Example of a Read-Across approach, using classical and ChemBERT - Transformer structural embeddings
  4. Chapter 4: A machine learning example for compound classification
-
-MC: 
-
-- Create ChemBERT embeddings from data lesson 2.6
-- upload dataset into ./data
-- upload Jupyter notebook into ./py
-- find one example compound from the data, that overlaps with ASPIS compounds, present graph on slide
-
-MT: 
-
-- Create `bookdown` project for workshop, include the chembert-features as a new model.
-- Tidymodels implementation (?)
-- publish on RSConnect
-- Clean up repo, add readme and credits and licence
-- add dependencies in DECSCRIPTION file 
