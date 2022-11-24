@@ -54,8 +54,11 @@ knitr::include_graphics(here::here(
 ))
 ```
 
+## Disclaimer on this work
+We would like to stress that the code and work included in this repo and worshop is experimental. It was not reviewed by a peer assessment process. The code, examples and work should be considered accordingly. The work is meant for illustrative and educational purposes. The authors do not take any responsiblility for the use, re-use, application or derivates from the work included in this repository. We appreciate attribution of the original work and adapted work by the authors of this repo.
 
-Welcome to the workshop on "Applications for artificial intelligence (AI) in risk assessment", next Friday 25 November, from 1 to 4 pm, during the ESTIV/ASPIS Conference in Sitges, Barcelona in Spain. This Workshop consists of 4 learning activities:
+## AiRA
+Welcome to the workshop on "Applications for artificial intelligence (AI) in risk assessment" (AiRA), Friday 25 November, from 1 to 4 pm, during the ESTIV/ASPIS Conference in Sitges, Barcelona in Spain. This Workshop consists of 4 learning activities:
 
  1. An introduction to R and the tidyverse
  1. An introduction to Tidymodels in R (adapted from the Tidymodels documentation)
@@ -72,7 +75,9 @@ Please note: this is a crash course. We scheduled this course to allow you to th
 
 We wish you good luck and we hope you will have a lot of fun with R!
 
-### Course material
+##
+
+## Course material
 
 The course material consists of the following:
 
@@ -82,12 +87,11 @@ The course material consists of the following:
 To navigate through the different materials, you can use the menu on the left. The course is based on the online book [R for Data Science](https://r4ds.had.co.nz/index.html).
 
 
-### Exercises
+## Exercises
 
-The exercises consist of writing R code to solve data analysis problems. Answers are available for each exercise. Most likely you will not finish all exercises during the lesson, which means that you will have to finish them in your own time. It is important to make all exercises: the only way to learn R is to practice, practice and practice by making the exercises. Some R functions and principles are only explained via the exercises.
+The exercises consist of writing R code to solve data analysis problems. Answers are available for each exercise. Most likely you will not finish all exercises during the workshop. The best way to learn programming is to practice, practice and practice by making the exercises. 
 
-
-### R and RStudio
+## R and RStudio
 
 During the course, we will use R in the Integrated Development Environment  **RStudio**, which you can download and install for your system using the links below:
 
@@ -96,7 +100,6 @@ Download RStudio [here](https://posit.co/download/rstudio-desktop/)
 
 ## Resources and Bookdown
 This website has been created using the `{bookdown}` R package
-
 ```{r}
 citation(package = "bookdown")
 ```
@@ -106,5 +109,8 @@ I you want to learn more on bookdown, see [this link](https://bookdown.org/)
 
 After this course, you will be able to 
 
-- use R to perform a structure-based Read across
+- use R to perform a structure-based Generalised Read Across
 - explain the basics of machine learning and Deep learning in toxicology.
+- Build a Neural Network and monitor its performance in R
+- Build a classical Machine Learning model and evaluate its performance
+- Run model-tuning to find optimal hyperparameters 
