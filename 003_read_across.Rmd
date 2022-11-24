@@ -148,7 +148,7 @@ So, could there be compounds that have a different dtxsid but the same QSAR read
 We can see that this dataset contains information on 6955 chemicals (rows), that are represented by DTXSIDs, a substance identifier provided through the U.S. EPA's Computational Toxicology Dashboard: https://comptox.epa.gov/dashboard. Chemical identifiers are also presented as SMILES and QSAR_READY_SMILES. The QSAR_READY_SMILES values are what we will specifically need in a later step, to construct chemical fingerprints from. QSAR_READY_SMILES refers to SMILES that have been standardized related to salts, tautomers, inorganics, aromaticity, and stereochemistry (among other factors) prior to any QSAR modeling or prediction. Let's make sure that these values are recognized as character format and placed in its own vector, to ensure proper execution of functions throughout this script:
 
 ```{r}
-all_smiles <- as.character(substances$QSAR_READY_SMILES)
+all_smiles <- as.character(substances$qsar_ready_smiles)
 ```
 
 Now let's view the acute toxicity dataset:
