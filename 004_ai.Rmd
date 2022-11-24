@@ -1,19 +1,29 @@
 # Part 4 -- AI for Toxicity Prediction
 
 In this part we experiment on using Deep Learning and more classical machine learning techniques to classsify compounds, or get a prediction for the LD50 outcome. We use the same dataset as in part 3, derived from the TAME toolbox. 
-Deep Learning is a modern predictive approach where neural networks are used to train a model on labelled data. The network are able to detect pattern associated to the outcome, based on the label. There are many different architectures available to choose from. Depending on the intended task, one or more of these architectures can be chosen. Also, there are a number of implementations available to build neural networks. Popular frameworks are [PyTorch](https://pytorch.org/), [Keras](https://keras.io/) and [Tensorflow](https://www.tensorflow.org/?gclid=EAIaIQobChMIptjygcrG-wIVyOZ3Ch1omQ4MEAAYASAAEgLtF_D_BwE). PyTorch is available for Python only, whereas Keras and Tensorflow are avaible for both Python and R programming environments. Because R is reklatively much used by academic community, we use tensorflow and keras in R for this workshop. The [`{reticulate}` R package](), which is an interface to Python from R, makes it possible to setup Tensorflow in RStudio. 
+Deep Learning is a modern predictive approach where neural networks are used to train a model on labelled data. The network are able to detect pattern associated to the outcome, based on the label. There are many different architectures available to choose from. Depending on the intended task, one or more of these architectures can be chosen. Also, there are a number of implementations available to build neural networks. Popular frameworks are [PyTorch](https://pytorch.org/), [Keras](https://keras.io/) and [Tensorflow](https://www.tensorflow.org/?gclid=EAIaIQobChMIptjygcrG-wIVyOZ3Ch1omQ4MEAAYASAAEgLtF_D_BwE). PyTorch is available for Python only, whereas Keras and Tensorflow are avaible for both Python and R programming environments. Because R is relatively much used by the academic community, we use tensorflow and keras in R for this workshop. The [`{reticulate}` R package](), which is an interface to Python from R, makes it possible to setup Tensorflow in RStudio. 
 
-It can howver be quite tricky to get this technically setup, especially when you are on a new Mac with M10-chip. Luckily there is are many good resources to help you along:
+It can however be quite tricky to get this technically setup, especially when you are on a new Mac with M1-chip. Luckily there is are many good resources to help you along:
 
  - https://developer.apple.com/metal/tensorflow-plugin/
  - https://tensorflow.rstudio.com/install/
+ - https://stackoverflow.com/questions/50145643/unable-to-change-python-path-in-reticulate
 
+For natural languge processing [Hugging Face](https://huggingface.co/) models are a good place to start.
 
+I you are looking for a good resource to start on Deep Learning, see the excellent book from Manning that [is avaialble for R](https://www.manning.com/books/deep-learning-with-r) and for [Python](https://www.manning.com/books/deep-learning-with-python-second-edition)
 
-For natural languge processing Hugging
+## Installing Tensorflow for R
+We follow the steps in theese [docs ](https://tensorflow.rstudio.com/install/) for installing Tensorflow on Windows computers. If you experience technical difficulties, we can try to help you during the workshop. We are also available after the workshop or via an online meeting to help you along if needed.
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r include = FALSE, eval = TRUE}
+# set CSS for objects
+knitr::opts_chunk$set(
+  class.source="Rchunk", 
+  class.output="Rout", 
+  warning = FALSE,
+  error = FALSE,
+  message = FALSE)
 ```
 
 ## Packages

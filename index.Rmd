@@ -129,7 +129,10 @@ Corradi, M.; De Haan, A. & Teunis, M.A.T., 2022, "Workshop on 'Applications for 
 
 and include the original source as:
 
-[TAME](https://uncsrp.github.io/Data-Analysis-Training-Modules/machine-learning-and-predictive-modeling.html#machine-learning-and-predictive-modeling), and was reproduced and adapted with permission of the authors. See for the publications and [the complete Toolbox:](https://github.com/UNCSRP/Data-Analysis-Training-Modules). This toolbox is a good place to start for Introductory Data Science, Chemical-Biological Analyses, Predictive Modeling, and Database Mining for Environmental Health Research. 
+Roell K, Koval LE, Boyles R, Patlewicz G, Ring C, Rider CV, Ward-Caviness C, Reif DM, Jaspers I, Fry RC, Rager JE. Development of the InTelligence And Machine LEarning (TAME) Toolkit for Introductory Data Science, Chemical-Biological Analyses, Predictive Modeling, and Database Mining for Environmental Health Research. Front Toxicol. 2022 Jun 22;4:893924. doi: 10.3389/ftox.2022.893924. PMID: 35812168; PMCID: PMC9257219.
+https://doi.org/10.3389/ftox.2022.893924
+
+Some materials were adapted from: [TAME](https://uncsrp.github.io/Data-Analysis-Training-Modules/machine-learning-and-predictive-modeling.html#machine-learning-and-predictive-modeling), and was reproduced and adapted with permission of the authors. See for the publications and [the complete Toolbox:](https://github.com/UNCSRP/Data-Analysis-Training-Modules). This toolbox is a good place to start for Introductory Data Science, Chemical-Biological Analyses, Predictive Modeling, and Database Mining for Environmental Health Research. 
 
 
 
