@@ -1,5 +1,15 @@
 # Part 1 -- Introduction to R and RStudio
 
+```{r include = FALSE, eval = TRUE}
+# set CSS for objects
+knitr::opts_chunk$set(
+  class.source="Rchunk", 
+  class.output="Rout", 
+  warning = FALSE,
+  error = FALSE,
+  message = FALSE)
+```
+
 ```{r include=FALSE}
 load("course_urls.RData")
 les <- 1

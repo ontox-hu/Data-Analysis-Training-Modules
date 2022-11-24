@@ -1,5 +1,17 @@
 # Part 4 -- AI for Toxicity Prediction
 
+In this part we experiment on using Deep Learning and more classical machine learning techniques to classsify compounds, or get a prediction for the LD50 outcome. We use the same dataset as in part 3, derived from the TAME toolbox. 
+Deep Learning is a modern predictive approach where neural networks are used to train a model on labelled data. The network are able to detect pattern associated to the outcome, based on the label. There are many different architectures available to choose from. Depending on the intended task, one or more of these architectures can be chosen. Also, there are a number of implementations available to build neural networks. Popular frameworks are [PyTorch](https://pytorch.org/), [Keras](https://keras.io/) and [Tensorflow](https://www.tensorflow.org/?gclid=EAIaIQobChMIptjygcrG-wIVyOZ3Ch1omQ4MEAAYASAAEgLtF_D_BwE). PyTorch is available for Python only, whereas Keras and Tensorflow are avaible for both Python and R programming environments. Because R is reklatively much used by academic community, we use tensorflow and keras in R for this workshop. The [`{reticulate}` R package](), which is an interface to Python from R, makes it possible to setup Tensorflow in RStudio. 
+
+It can howver be quite tricky to get this technically setup, especially when you are on a new Mac with M10-chip. Luckily there is are many good resources to help you along:
+
+ - https://developer.apple.com/metal/tensorflow-plugin/
+ - https://tensorflow.rstudio.com/install/
+
+
+
+For natural languge processing Hugging
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```

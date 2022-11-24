@@ -40,12 +40,17 @@ save(
 
 ```{r include = FALSE, eval = TRUE}
 # set CSS for objects
-knitr::opts_chunk$set(class.source="Rchunk", class.output="Rout")
+knitr::opts_chunk$set(
+  class.source="Rchunk", 
+  class.output="Rout", 
+  warning = FALSE,
+  error = FALSE,
+  message = FALSE)
 ```
 
 # Introduction {-}
 
-[This Materials and Training was produced for the ASPIS/ESTIV Conference, 2022, to be held on 25 November in Sitges (Barcelona) in Spain](https://estiv.org/congress2022/)
+[These workshop materials was produced for the ASPIS/ESTIV Conference, 2022, to be held on 25 November in Sitges (Barcelona) in Spain](https://estiv.org/congress2022/)
 
 ```{r, echo=FALSE}
 knitr::include_graphics(here::here(
@@ -74,8 +79,6 @@ You can find these lessons in the menu on the left. Each lesson starts with a sh
 Please note: this is a crash course. We scheduled this course to allow you to throw yourself into R and be able to see yourself making progress very quickly. 
 
 We wish you good luck and we hope you will have a lot of fun with R!
-
-##
 
 ## Course material
 
@@ -114,3 +117,19 @@ After this course, you will be able to
 - Build a Neural Network and monitor its performance in R
 - Build a classical Machine Learning model and evaluate its performance
 - Run model-tuning to find optimal hyperparameters 
+
+## Reference and original source
+Some of the materials presented here were originally developed by Dr. Grace Patlewicz and Dr. Julia E. Rager as part of [TAME](https://uncsrp.github.io/Data-Analysis-Training-Modules/machine-learning-and-predictive-modeling.html#machine-learning-and-predictive-modeling), and was reproduced and adapted with permission of the authors. See for the publications and [the complete Toolbox:](https://github.com/UNCSRP/Data-Analysis-Training-Modules). This toolbox is a good place to start for Introductory Data Science, Chemical-Biological Analyses, Predictive Modeling, and Database Mining for Environmental Health Research. 
+
+## Attribution
+
+This work is distributed under a CC BY-NC 4.0 licence. Please cite this work as:
+
+Corradi, M.; De Haan, A. & Teunis, M.A.T., 2022, "Workshop on 'Applications for artificial intelligence (AI) in risk assessment' (AiRA)", ASPIS Cluster Meeting, Sitges, Barcelona, https://github.com/ontox-hu/aira 
+
+and include the original source as:
+
+[TAME](https://uncsrp.github.io/Data-Analysis-Training-Modules/machine-learning-and-predictive-modeling.html#machine-learning-and-predictive-modeling), and was reproduced and adapted with permission of the authors. See for the publications and [the complete Toolbox:](https://github.com/UNCSRP/Data-Analysis-Training-Modules). This toolbox is a good place to start for Introductory Data Science, Chemical-Biological Analyses, Predictive Modeling, and Database Mining for Environmental Health Research. 
+
+
+

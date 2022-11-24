@@ -19,7 +19,11 @@ This material came with a disclaimer, and we reproduce it here for compliance:
 
 ```{r, include=FALSE}
 #set default values for R Markdown "knitting" to HTML, Word, or PDF
-knitr::opts_chunk$set(echo = TRUE) #print code chunks
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  error = FALSE,
+  message = FALSE) #print code chunks
 ```
 
 ## Packages
@@ -785,9 +789,10 @@ all_genra_data_results <- readr::read_csv(here::here("data", "all_genra.csv"), c
 all_genra_data_results |>
   dplyr::filter(!no_similars == 0) |>
   ggplot(aes(x = log10(ld50_pred), y = log10(ld50_exp))) +
-  geom_point() +
+  geom_point(shape = 1, alpha = 0.3) +
   geom_line(data = tibble(x = 0:100000, y = 0:100000),
-            aes(x = log10(x), y = log10(y)))
+            aes(x = log10(x), y = log10(y))) +
+  theme_bw()
 
 all_genra_data_results |>
   group_by(no_similars) |>
@@ -797,11 +802,12 @@ all_genra_data_results |>
 ```
 
 ## Conclusion from our GenRA, overall analysis:
-A number of compounds experience really poor predictions and we loose 2253 compounds for which no similars can be found, based on the 0.75 cutoff for similarity.
+A number of compounds experience really poor predictions and we loose at least 2253 compounds for which no similars can be found, based on the 0.75 cutoff for similarity. There were also 1113 compounds that had only 1 similar, so basically we cannot perform a read across on those as well. Having only 2 similars is also very limit in terms of having data for the target, so we could consider those lost for the analysis as well. That leaves about half of the short of 7000 chemicals that we can have a prediction for.  
 
 ```
-# A tibble: 47 × 2   no_similars     n
-         <dbl> <int> 1           0  2254
+# A tibble: 47 × 2   
+   no_similars     n
+ 1           0  2254
  2           1  1113
  3           2   702
  4           3   498
@@ -814,4 +820,54 @@ A number of compounds experience really poor predictions and we loose 2253 compo
 # … with 37 more rows# ℹ Use `print(n = ...)` to see more rows
 ```
 
-This makes a strong case for a different type of approach: see part "AI for Toxicity Prediction".
+## Illustrate the compounds for which we have more than 4 similars
+Let's say we would be confident on our read across if we would have at least 4 similars for any given target. How do we show the chemicals for which we could be confident in the graph?
+
+```{r}
+all_genra_data_results |>
+  dplyr::filter(!no_similars == 0) |>
+  mutate(
+    information_content = 
+      ifelse(no_similars > 4, ">4", "1-4")) -> information_content_genra
+
+information_content_genra |>
+  ggplot(aes(x = log10(ld50_pred), y = log10(ld50_exp))) +
+  geom_point(aes(colour = information_content), shape = 1) +
+  geom_line(data = tibble(x = 0:100000, y = 0:100000),
+            aes(x = log10(x), y = log10(y))) +
+  facet_wrap(~information_content)
+
+information_content_genra |>
+  group_by(information_content) |>
+  tally()
+
+```
+
+So, we are left with 1973 compounds for which we can be 'confident', based on having 5 or more similars.
+
+This makes a strong case for a different type of approach: see [part "AI for Toxicity Prediction"](https://rstudio-connect.hu.nl/aira/part-4-ai-for-toxicity-prediction.html). In this approach we will not limit ourselves by identifying similars, but rather use the structural information we have for each compound (fingerprints and other types of structural embeddings) to build a predictive model. It is a proof of concept for using Deep Learning and classical Machine Learning approaches in this type of data, with the comment that the dataset is considered small for Deep Learning.
+
+## Get compound DTXSIDs for which no prediction could be made
+In order to see if the Machine Learning approaches in the next section are of added value to the Generalised Read Across we perfomed above, we store the TXSIDs of the compounds for which 4 or less similars were found. We will use these to benchmark our approaches in the next section [Part 4 of this reader](https://rstudio-connect.hu.nl/aira/part-4-ai-for-toxicity-prediction.html).
+
+```{r}
+less_ten_five_txsid <- information_content_genra |>
+  dplyr::filter(information_content < 5) |>
+  dplyr::select(dtxsid) |>
+  unlist() |>
+  as.character()
+less_ten_five_txsid
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
