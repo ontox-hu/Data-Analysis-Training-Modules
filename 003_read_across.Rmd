@@ -514,7 +514,7 @@ Acute toxicity data from these chemical analogues can now be extracted and read 
 
 Let's first merge the acute data for these analogues into our working dataframe:
 ```{r}
-#source_analogues <- merge(source_analogues, acute_data, by.x = 'DTXSID', by.y = 'DTXSID')
+#source_analogues <- merge(source_analogues, acute_data, by.x = 'DTXSID', by.y = 'dtxsid')
 
 
 
