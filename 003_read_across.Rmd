@@ -715,6 +715,8 @@ do_genra(
 
 ```
 
+Do not run the following code chunk as it will take far too long. We already ran it for you before the workshop.
+
 ```{r, eval=FALSE}
 dtxsid_lst <- data_all$dtxsid |> unique()
 safe_do_genra <- safely(do_genra)
@@ -725,7 +727,7 @@ library(furrr) # https://furrr.futureverse.org/
 plan(multisession, workers = 28)
 
 # This does run in parallel!
-genra_all <- future_map(
+# genra_all <- future_map(
   dtxsid_lst,
   safe_do_genra,
   sim = all_sims,
