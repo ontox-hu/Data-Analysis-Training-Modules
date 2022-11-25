@@ -300,22 +300,6 @@ knitr::include_graphics(
 )
 ```
 
-This is the code to visualize the molecule using `{ChemmineR}`. This Bioconductor needs an Open Babel installation, which I could not make work on the VM. See: http://openbabel.org/wiki/Main_Page
-and https://packages.debian.org/unstable/libopenbabel-dev
-
-```{r, eval=FALSE}
-## currently not working on the env I am working in 
-
-#library(ChemmineR)
-#library(ChemmineOB)
-
-#sdf <- smiles2sdf(target_compound)
-#view(sdf) 
-
-## molecule viz
-#plot(sdf) # Plots structures to R graphics device 
-```
-
 We can also visualize the compound using the link to the EPA Dashboard above, or via this [VHP4Safety Platform tool](https://cdkdepict.cloud.vhp4safety.nl/depict.html).
 
 <div class="question">
@@ -355,7 +339,7 @@ target_tox <- acute_data |>
 To eventually identify chemical analogues with information that can be 'read-across' to our target chemical  (Chloropromazine), we first need to evaluate how similar each chemical is to one another. In this example, we will base our search for similar substances upon similarities between chemical structure fingerprint representations. Once these chemical structure fingerprints are derived, they will be used to calculate the degree to which each possible pair of chemicals is similar, leveraging the Tanimoto metric. These findings will yield a similarity matrix of all possible pairwise similarity scores.
 
 ### Converting Chemical Identifiers into Molecular Objects (MOL)
-To derive structure fingerprints across all evaluated substances, we need to first convert the chemical identifiers originally provided as 'QSAR_READY_SMILES' into molecular objects. The standard exchange format for molecular information is a MOL file. This is a chemical file format that contains plain text information and stores information about atoms, bonds and their connections.
+To derive structure fingerprints across all evaluated substances, we need to first convert the chemical identifiers originally provided as 'qsar_ready_smiles' into molecular objects. The standard exchange format for molecular information is a MOL file. This is a chemical file format that contains plain text information and stores information about atoms, bonds and their connections.
 
 We can carry out these identifier conversions using the 'parse.smiles' function within the rcdk package. Here we do this for the target chemical of interest, as well as all substances in the dataset.
 
@@ -472,15 +456,6 @@ similars_tidy |>
 
 This gives us our analogues list! Specifically, we have
 `r unique(similars_tidy$dtxsid) |> length() -2` structurally similar chemicals (that are not Chloropromazine or equivalent. 
-
-```{r}
-#source_analogues <- t(target.sim) # Transposing the filtered similarity matrix results
-#DTXSID <- rownames(source_analogues) # Temporarily grabbing the dtxsid identifiers from this matrix
-#source_analogues <- cbind(DTXSID, source_analogues) # Adding these identifiers as a column
-#rownames(source_analogues) <- NULL # Removing the rownames from this dataframe, to land on a cleaned dataframe
-#colnames(source_analogues) <- c('DTXSID', 'Target_TanimotoSim') # Renaming column headers
-#source_analogues[1:12,1:2] # Viewing the cleaned dataframe of analogues
-```
 
 With this, we can answer **Environmental Health Question 1**
 
