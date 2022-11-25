@@ -10,20 +10,17 @@ output:
         split_by: chapter
         config:
             sharing:
-                 github: yes
+                 github: no
                  facebook: no
                  twitter: no
                  all: no
             toc:
                 collapse: section
                 scroll_highlight: yes
-                before: <li class="toc-logo"><a href="./"></a> <h4 class=".paddingtitel ">AI in Risk Assessment (AiRA) </h2></li>
+                before: <li class="toc-logo"><a href="./"></a> <h4 class=".paddingtitel ">AiRA</h2></li>
 header-includes:
   - \usepackage{fontawesome5}
 ---
-
-Download the source code [`r icons::fontawesome("github")`](https://github.com/ontox-hu/aspis-workshop-ai-tox)
-
 
 ```{r include = FALSE}
 # Define the web addresses for the course
@@ -50,6 +47,8 @@ knitr::opts_chunk$set(
 
 # Introduction {-}
 
+Download the source code [`r icons::fontawesome("github")`](https://github.com/ontox-hu/aira)
+
 [These workshop materials was produced for the ASPIS/ESTIV Conference, 2022, to be held on 25 November in Sitges (Barcelona) in Spain](https://estiv.org/congress2022/)
 
 ```{r, echo=FALSE}
@@ -60,7 +59,7 @@ knitr::include_graphics(here::here(
 ```
 
 ## Disclaimer on this work
-We would like to stress that the code and work included in this repo and worshop is experimental. It was not reviewed by a peer assessment process. The code, examples and work should be considered accordingly. The work is meant for illustrative and educational purposes. The authors do not take any responsiblility for the use, re-use, application or derivates from the work included in this repository. We appreciate attribution of the original work and adapted work by the authors of this repo.
+We would like to stress that the code and work included in this repo and workshop is experimental. It was not reviewed by a peer assessment process. The code, examples and work should be considered accordingly. The work is meant for illustrative and educational purposes. The authors do not take any responsibly for the use, re-use, application or derivates from the work included in this repository. We appreciate attribution of the original work and adapted work by the authors of this repo.
 
 ## AiRA
 Welcome to the workshop on "Applications for artificial intelligence (AI) in risk assessment" (AiRA), Friday 25 November, from 1 to 4 pm, during the ESTIV/ASPIS Conference in Sitges, Barcelona in Spain. This Workshop consists of 4 learning activities:
@@ -87,12 +86,7 @@ The course material consists of the following:
 - Instruction pages (menu to the left). 
 - Exercises.
 
-To navigate through the different materials, you can use the menu on the left. The course is based on the online book [R for Data Science](https://r4ds.had.co.nz/index.html).
-
-
-## Exercises
-
-The exercises consist of writing R code to solve data analysis problems. Answers are available for each exercise. Most likely you will not finish all exercises during the workshop. The best way to learn programming is to practice, practice and practice by making the exercises. 
+To navigate through the different materials, you can use the menu on the left. Part 1 of this workshop is based on the online book [R for Data Science](https://r4ds.had.co.nz/index.html). Part 2is based on the [Tidymodels documentation](https://www.tidymodels.org/). Part 3 was adapted from [TAME](https://uncsrp.github.io/Data-Analysis-Training-Modules/machine-learning-and-predictive-modeling.html#machine-learning-and-predictive-modeling). Part 4 was created from scratch, but information and code examples were derived from [tensorflow for R documentation](https://tensorflow.rstudio.com/tutorials/quickstart/beginner)
 
 ## R and RStudio
 
@@ -118,14 +112,16 @@ After this course, you will be able to
 - Build a classical Machine Learning model and evaluate its performance
 - Run model-tuning to find optimal hyperparameters 
 
-## Reference and original source
-Some of the materials presented here were originally developed by Dr. Grace Patlewicz and Dr. Julia E. Rager as part of [TAME](https://uncsrp.github.io/Data-Analysis-Training-Modules/machine-learning-and-predictive-modeling.html#machine-learning-and-predictive-modeling), and was reproduced and adapted with permission of the authors. See for the publications and [the complete Toolbox:](https://github.com/UNCSRP/Data-Analysis-Training-Modules). This toolbox is a good place to start for Introductory Data Science, Chemical-Biological Analyses, Predictive Modeling, and Database Mining for Environmental Health Research. 
-
 ## Attribution
 
 This work is distributed under a CC BY-NC 4.0 licence. Please cite this work as:
 
 Corradi, M.; De Haan, A. & Teunis, M.A.T., 2022, "Workshop on 'Applications for artificial intelligence (AI) in risk assessment' (AiRA)", ASPIS Cluster Meeting, Sitges, Barcelona, https://github.com/ontox-hu/aira 
+
+This reference can be viewed in R, when you have build the aira package or installed it from Github, by running:
+```{r}
+citation(package = "aira")
+```
 
 and include the original source as:
 
@@ -134,5 +130,22 @@ https://doi.org/10.3389/ftox.2022.893924
 
 Some materials were adapted from: [TAME](https://uncsrp.github.io/Data-Analysis-Training-Modules/machine-learning-and-predictive-modeling.html#machine-learning-and-predictive-modeling), and was reproduced and adapted with permission of the authors. See for the publications and [the complete Toolbox:](https://github.com/UNCSRP/Data-Analysis-Training-Modules). This toolbox is a good place to start for Introductory Data Science, Chemical-Biological Analyses, Predictive Modeling, and Database Mining for Environmental Health Research. 
 
+Please also provide attribution to R itself
+```{r}
+citation()
+```
 
+The `{tidyvese}`
+```{r}
+citation(package = "tidyverse")
+```
 
+`{tidymodels}`
+```{r}
+citation(package = "tidymodels")
+```
+
+And `{rcdk}`
+```{r}
+citation(package = "rcdk")
+```

@@ -253,30 +253,13 @@ Operating System:
 
 Which has the following specs:
 
-`neofetch`
+------------- 
+OS: Ubuntu 18.04.6 LTS x86_64 
+Kernel: 4.15.0-194-generic 
+CPU: AMD EPYC (with IBPB) (30) @ 1.996GHz 
+GPU: Cirrus Logic GD 5446 
+Memory: 1601MiB / 483746MiB 
 
-            .-/+oossssoo+/-. 
-        `:+ssssssssssssssssss+:` 
-      -+ssssssssssssssssssyyssss+- 
-    .ossssssssssssssssssdMMMNysssso. 
-   /ssssssssssshdmmNNmmyNMMMMhssssss/ 
-  +ssssssssshmydMMMMMMMNddddyssssssss+ 
- /sssssssshNMMMyhhyyyyhmNMMMNhssssssss/  
-.ssssssssdMMMNhsssssssssshNMMMdssssssss.   ------------- 
-+sssshhhyNMMNyssssssssssssyNMMMysssssss+   OS: Ubuntu 18.04.6 LTS x86_64 
-ossyNMMMNyMMhsssssssssssssshmmmhssssssso
-ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Kernel: 4.15.0-194-generic 
-+sssshhhyNMMNyssssssssssssyNMMMysssssss+   Uptime: 11 days, 7 hours, 51 mins 
-.ssssssssdMMMNhsssssssssshNMMMdssssssss.   Packages: 1325 
- /sssssssshNMMMyhhyyyyhdNMMMNhssssssss/    Shell: bash 4.4.20 
-  +sssssssssdmydMMMMMMMMddddyssssssss+     Theme: Adwaita [GTK3] 
-   /ssssssssssshdmNNNNmyNMMMMhssssss/      Icons: Adwaita [GTK3] 
-    .ossssssssssssssssssdMMMNysssso.       Terminal: rsession 
-      -+sssssssssssssssssyyyssss+-         CPU: AMD EPYC (with IBPB) (30) @ 1.996GHz 
-        `:+ssssssssssssssssss+:`           GPU: Cirrus Logic GD 5446 
-            .-/+oossssoo+/-.               Memory: 1601MiB / 483746MiB 
-
-                                                                   
 `inxi -C`
 
 Gives us the cores
@@ -288,8 +271,13 @@ CPU(s):    30 Single core AMD EPYC (with IBPB)s (-SMP-) cache: 15360 KB
            29: 1996 MHz 30: 1996 MHz
 
 
-TODO: FIX BUG `"Error in view.molecule.2d(mol) : java.lang.NoSuchMethodError: <init>"`
-This is the code to visualize the molecule using `{rcdk}`
+## Dependencies for `{rcdk}`
+The R package rcdk uses Java under the hood. To install Java see: https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html. If you experience issues (like we did!), please see: https://github.com/CDK-R/cdkr for more info.
+
+We did not manage to get past the error below, which shows that these tools need further development to provide a stable solution.
+
+`"Error in view.molecule.2d(mol) : java.lang.NoSuchMethodError: <init>"`
+This is the code to visualize the molecule using `{rcdk}`.
 ```{r, eval=FALSE}
 target_id <- "DTXSID0022808"
 library(rcdk)
@@ -852,12 +840,12 @@ This makes a strong case for a different type of approach: see [part "AI for Tox
 In order to see if the Machine Learning approaches in the next section are of added value to the Generalised Read Across we perfomed above, we store the TXSIDs of the compounds for which 4 or less similars were found. We will use these to benchmark our approaches in the next section [Part 4 of this reader](https://rstudio-connect.hu.nl/aira/part-4-ai-for-toxicity-prediction.html).
 
 ```{r}
-less_ten_five_txsid <- information_content_genra |>
+less_then_five_txsid <- information_content_genra |>
   dplyr::filter(information_content < 5) |>
   dplyr::select(dtxsid) |>
   unlist() |>
   as.character()
-less_ten_five_txsid
+
 ```
 
 
