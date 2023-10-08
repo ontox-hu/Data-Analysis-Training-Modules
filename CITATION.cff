@@ -3,7 +3,7 @@ message: "If you use this software and educational materials, please cite it as 
 authors:
 - family-names: "Teunis"
   given-names: "Marc"
-  orcid: "hhttps://orcid.org/0000-0002-3496-6669"
+  orcid: "https://orcid.org/0000-0002-3496-6669"
 - family-names: "De Haan"
   given-names: "Alyanne"
   orcid: "https://orcid.org/0000-0003-0896-0906"
