@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/564271576.svg)](https://zenodo.org/badge/latestdoi/564271576)
+
 # Workshop on "Applications for artificial intelligence (AI) in risk assessment" (AIRA)
 
 This repo contains the materials for the training course "Applications for artificial intelligence (AI) in risk assessment", held on Friday 25 November 2022 in Sitges - Barcelona in Spain.
